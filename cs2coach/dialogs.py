@@ -379,8 +379,11 @@ class UpdateDialog(QDialog):
         if self.frozen:
             choose.setEnabled(False)
             self.rollback_btn.setEnabled(False)
-            self.status.setText("Você está usando o .exe. Para atualizar, abra o app pelo atalho com Python "
-                                "(rode criar_atalho.bat depois de apagar a pasta dist) ou gere o .exe de novo após atualizar.")
+            self.status.setText(f"Você está usando o .exe. Para atualizar, baixe a versão nova em "
+                                f"<a href='{updater.RELEASES}' style='color:{ACCENT}'>Releases do GitHub</a>, extraia e "
+                                "substitua a pasta antiga. Seu histórico e perfil ficam salvos.")
+            self.status.setTextFormat(Qt.RichText)
+            self.status.setOpenExternalLinks(True)
         backups = updater.backups()
         self.rollback_btn.setVisible(bool(backups))
         if backups:

@@ -308,3 +308,10 @@ def test_profile_dialog_picks_weapon(app, main):
     assert dlg.data["fav_weapon"] == ""
     assert dlg.weapon_box.count() == 1 + len(__import__("cs2coach.weapons").weapons.WEAPONS)
     dlg.close()
+
+
+def test_exe_points_to_releases(app, main, monkeypatch):
+    monkeypatch.setattr(sys, "frozen", True, raising=False)
+    dlg = UpdateDialog(main)
+    assert "github.com/Lucas-oss444/CS2_analytics/releases" in dlg.status.text() and dlg.status.openExternalLinks()
+    dlg.close()

@@ -35,7 +35,8 @@ Funciona 100% offline: não pede login, não acessa a internet e não interage c
 - **Python** com **PySide6** (Qt) na interface e **matplotlib** nos gráficos
 - **demoparser2** para ler as demos e **pandas**/**numpy** para as estatísticas
 - **SQLite** para o histórico e **Parquet** (pyarrow) para a biblioteca de demos
-- **pytest** e **GitHub Actions** para rodar os testes automaticamente no Windows a cada push
+- **pytest** e **GitHub Actions** para rodar os testes no Windows a cada push e publicar o `.exe` em cada versão
+- **PyInstaller** para gerar o executável
 
 ## Estrutura
 
@@ -52,10 +53,18 @@ cs2coach/
   card.py       geração dos cartões em PNG
   weapons.py    adesivos das armas desenhados com QPainter
   ui.py, replay_ui.py, clips_ui.py, dialogs.py, profile.py, theme.py   interface
-tests/          147 testes automatizados
+tests/          148 testes automatizados
 ```
 
-## Como rodar
+## Como baixar
+
+1. Entre em [Releases](https://github.com/Lucas-oss444/CS2_analytics/releases) e baixe o `CS2Analytics-vX.Y.Z.zip` da versão mais recente.
+2. Extraia o zip e abra `CS2Analytics.exe`. Não precisa instalar Python.
+3. Se o Windows mostrar "O Windows protegeu o computador", clique em **Mais informações → Executar assim mesmo**. O aviso aparece porque o executável não tem assinatura digital paga.
+
+Cada Release é gerado pelo GitHub Actions a partir do código desta versão, depois de passar nos testes, e traz o SHA-256 do zip para conferência. Para atualizar, baixe a versão nova e substitua a pasta: o histórico e o perfil ficam em `~/.cs2coach/` e não se perdem.
+
+## Rodar pelo código
 
 Requer Python 3.10+ (Windows, Linux ou macOS).
 

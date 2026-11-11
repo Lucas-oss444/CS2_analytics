@@ -1,5 +1,10 @@
 # Histórico de versões
 
+## 2.19.0
+- Primeira versão com download pronto: o `.exe` é gerado e publicado automaticamente na página de Releases do GitHub
+- No `.exe`, a janela de atualizações leva direto para a página de Releases
+- O `.exe` gerado pelo `build_exe.bat` agora mostra a versão certa no menu
+
 ## 2.18.1
 - Corrige a recuperação de um histórico corrompido no Windows: o arquivo ficava preso e o app não conseguia substituí-lo
 

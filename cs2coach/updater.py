@@ -19,6 +19,7 @@ SKIP_DIRS = {"__pycache__", ".pytest_cache", "build", "dist", ".venv", "venv", "
 NAMES = {"VERSION", "LICENSE", ".gitignore"}
 SCRIPTS = {"build_exe.bat", "criar_atalho.bat", "rodar_testes.bat"}
 REQUIRED = {"VERSION", "main.py", "cs2coach/__init__.py", "cs2coach/ui.py"}
+RELEASES = "https://github.com/Lucas-oss444/CS2_analytics/releases"
 MAX_FILES, MAX_TOTAL = 500, 50 * 1024 ** 2
 
 
