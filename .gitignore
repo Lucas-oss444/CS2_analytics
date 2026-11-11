@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+build/
+dist/
+*.spec
+*.dem
+*.dem.zst
+*.dem.gz
+*.dem.bz2
+_to_delete/
+.venv/
+venv/
+.idea/
+.vscode/
