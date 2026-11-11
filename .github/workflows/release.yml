@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  release:
+    runs-on: windows-latest
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    env:
+      QT_QPA_PLATFORM: offscreen
+      TAG: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+          cache: pip
+      - run: python -m pip install -r requirements.txt pytest pyinstaller
+      - run: python -m pytest -q tests
+      - name: Conferir versão
+        shell: python
+        run: |
+          import os, sys
+          version = open("VERSION", encoding="utf-8").read().strip()
+          if os.environ["TAG"] != f"v{version}":
+              sys.exit(f"A tag {os.environ['TAG']} não bate com o arquivo VERSION ({version}).")
+      - name: Gerar o .exe
+        run: pyinstaller --noconfirm --windowed --name CS2Analytics --icon assets\icon.ico --add-data "assets;assets" --add-data "VERSION;." --collect-all demoparser2 main.py
+      - name: Compactar
+        run: |
+          Copy-Item LICENSE, README.md dist\CS2Analytics\
+          Compress-Archive -Path dist\CS2Analytics -DestinationPath "CS2Analytics-$env:TAG.zip"
+      - name: Notas da versão
+        shell: python
+        run: |
+          import hashlib, os, re
+          tag = os.environ["TAG"]
+          text = open("CHANGELOG.md", encoding="utf-8").read()
+          m = re.search(rf"^## {re.escape(tag[1:])}\n(.*?)(?=^## |\Z)", text, re.S | re.M)
+          notes = m.group(1).strip() if m else ""
+          zip_name = f"CS2Analytics-{tag}.zip"
+          digest = hashlib.sha256(open(zip_name, "rb").read()).hexdigest()
+          notes += ("\n\n## Como instalar\n1. Baixe o `" + zip_name + "` abaixo e extraia.\n"
+                    "2. Abra `CS2Analytics.exe` dentro da pasta.\n"
+                    "3. Se o Windows mostrar \"O Windows protegeu o computador\", clique em **Mais informações → Executar assim mesmo**. "
+                    "O aviso aparece porque o executável não tem assinatura digital paga.\n\n"
+                    f"SHA-256 do zip: `{digest}`\n")
+          open("notas.md", "w", encoding="utf-8").write(notes)
+      - name: Publicar
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create $env:TAG "CS2Analytics-$env:TAG.zip" --title "CS2 Analytics $env:TAG" --notes-file notas.md
