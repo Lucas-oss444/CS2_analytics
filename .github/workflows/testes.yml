@@ -2,7 +2,12 @@ name: Testes
 
 on:
   push:
+    branches: [main]
   pull_request:
+
+concurrency:
+  group: testes-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   pytest:
