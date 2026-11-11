@@ -35,7 +35,7 @@ Funciona 100% offline: não pede login, não acessa a internet e não interage c
 - **Python** com **PySide6** (Qt) na interface e **matplotlib** nos gráficos
 - **demoparser2** para ler as demos e **pandas**/**numpy** para as estatísticas
 - **SQLite** para o histórico e **Parquet** (pyarrow) para a biblioteca de demos
-- **pytest** e **GitHub Actions** para os testes em Windows e Linux
+- **pytest** e **GitHub Actions** para rodar os testes automaticamente no Windows a cada push
 
 ## Estrutura
 

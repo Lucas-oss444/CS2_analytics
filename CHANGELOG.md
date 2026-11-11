@@ -1,5 +1,8 @@
 # Histórico de versões
 
+## 2.18.1
+- Corrige a recuperação de um histórico corrompido no Windows: o arquivo ficava preso e o app não conseguia substituí-lo
+
 ## 2.18.0
 - Perfil: escolha sua arma favorita; ela aparece com um mini adesivo ao lado do nome no menu lateral
 - Social: "Cartão do perfil" gera uma imagem PNG com avatar e borda, favoritos, arma com adesivo e seus abates com ela, números de carreira, melhor mapa e qualidades

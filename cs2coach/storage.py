@@ -45,10 +45,14 @@ class History:
 
     def _open(self, path):
         self.db = sqlite3.connect(path)
-        self.db.execute("PRAGMA quick_check").fetchone()
-        self.db.execute("""CREATE TABLE IF NOT EXISTS results (
-            match_id TEXT, played_at REAL, map TEXT, source TEXT, sid TEXT, name TEXT, metrics TEXT,
-            PRIMARY KEY (match_id, sid))""")
+        try:
+            self.db.execute("PRAGMA quick_check").fetchone()
+            self.db.execute("""CREATE TABLE IF NOT EXISTS results (
+                match_id TEXT, played_at REAL, map TEXT, source TEXT, sid TEXT, name TEXT, metrics TEXT,
+                PRIMARY KEY (match_id, sid))""")
+        except sqlite3.DatabaseError:
+            self.db.close()
+            raise
 
     def save(self, match, stats):
         mid = match_id(match)
